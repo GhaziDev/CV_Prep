@@ -10,5 +10,7 @@ public class UserInfo
     public required Blob MainCv {get;set;}
 
     public Blob? CoverLetter {get;set;}
+
+    public int NoOfTimesExec {get;set;}
     
 }

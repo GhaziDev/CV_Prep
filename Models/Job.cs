@@ -22,4 +22,5 @@ public class Job
 
 
     public required User _User;
+
 }

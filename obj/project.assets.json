@@ -2,6 +2,83 @@
   "version": 3,
   "targets": {
     "net10.0": {
+      "AWSSDK.Core/4.0.3.17": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/AWSSDK.Core.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.Core.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "AWSSDK.EventBridge/4.0.5.18": {
+        "type": "package",
+        "dependencies": {
+          "AWSSDK.Core": "[4.0.3.17, 5.0.0)"
+        },
+        "compile": {
+          "lib/net8.0/AWSSDK.EventBridge.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.EventBridge.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "AWSSDK.Lambda/4.0.13.4": {
+        "type": "package",
+        "dependencies": {
+          "AWSSDK.Core": "[4.0.3.17, 5.0.0)"
+        },
+        "compile": {
+          "lib/net8.0/AWSSDK.Lambda.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.Lambda.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "AWSSDK.S3/4.0.19": {
+        "type": "package",
+        "dependencies": {
+          "AWSSDK.Core": "[4.0.3.17, 5.0.0)"
+        },
+        "compile": {
+          "lib/net8.0/AWSSDK.S3.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.S3.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "AWSSDK.Scheduler/4.0.2.16": {
+        "type": "package",
+        "dependencies": {
+          "AWSSDK.Core": "[4.0.3.17, 5.0.0)"
+        },
+        "compile": {
+          "lib/net8.0/AWSSDK.Scheduler.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.Scheduler.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/10.0.3": {
         "type": "package",
         "dependencies": {
@@ -190,6 +267,128 @@
     }
   },
   "libraries": {
+    "AWSSDK.Core/4.0.3.17": {
+      "sha512": "Ab24kVquQ8kvuQKNe5MK/SvaXR4uoxPkAlTPALDEImaHcwsBg+UWfRVcNzLEx4dRR2y1mDFFh+zZ9TVMXGY6Jg==",
+      "type": "package",
+      "path": "awssdk.core/4.0.3.17",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "awssdk.core.4.0.3.17.nupkg.sha512",
+        "awssdk.core.nuspec",
+        "images/AWSLogo.png",
+        "lib/net472/AWSSDK.Core.dll",
+        "lib/net472/AWSSDK.Core.xml",
+        "lib/net8.0/AWSSDK.Core.dll",
+        "lib/net8.0/AWSSDK.Core.xml",
+        "lib/netcoreapp3.1/AWSSDK.Core.dll",
+        "lib/netcoreapp3.1/AWSSDK.Core.xml",
+        "lib/netstandard2.0/AWSSDK.Core.dll",
+        "lib/netstandard2.0/AWSSDK.Core.xml",
+        "tools/account-management.ps1"
+      ]
+    },
+    "AWSSDK.EventBridge/4.0.5.18": {
+      "sha512": "xURQ1Hrvv5PftCRVaX5tJ4jsfgzt81VTtw3jKqCVg5vUgqKs2J9x3aQjpv92awmQkcn/61fpP9D58UlC8t38Jg==",
+      "type": "package",
+      "path": "awssdk.eventbridge/4.0.5.18",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "analyzers/dotnet/cs/AWSSDK.EventBridge.CodeAnalysis.dll",
+        "analyzers/dotnet/cs/SharedAnalysisCode.dll",
+        "awssdk.eventbridge.4.0.5.18.nupkg.sha512",
+        "awssdk.eventbridge.nuspec",
+        "images/AWSLogo.png",
+        "lib/net472/AWSSDK.EventBridge.dll",
+        "lib/net472/AWSSDK.EventBridge.xml",
+        "lib/net8.0/AWSSDK.EventBridge.dll",
+        "lib/net8.0/AWSSDK.EventBridge.xml",
+        "lib/netcoreapp3.1/AWSSDK.EventBridge.dll",
+        "lib/netcoreapp3.1/AWSSDK.EventBridge.xml",
+        "lib/netstandard2.0/AWSSDK.EventBridge.dll",
+        "lib/netstandard2.0/AWSSDK.EventBridge.xml",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
+    "AWSSDK.Lambda/4.0.13.4": {
+      "sha512": "rlPAbo7oZAKW7I3TQyz7a2C3GHUu+nMcVWnOQDUxKUMnybzeLEZWi4L8QNczM6JTFtHoeQiMJZppSf8WO0Ebig==",
+      "type": "package",
+      "path": "awssdk.lambda/4.0.13.4",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "analyzers/dotnet/cs/AWSSDK.Lambda.CodeAnalysis.dll",
+        "analyzers/dotnet/cs/SharedAnalysisCode.dll",
+        "awssdk.lambda.4.0.13.4.nupkg.sha512",
+        "awssdk.lambda.nuspec",
+        "images/AWSLogo.png",
+        "lib/net472/AWSSDK.Lambda.dll",
+        "lib/net472/AWSSDK.Lambda.xml",
+        "lib/net8.0/AWSSDK.Lambda.dll",
+        "lib/net8.0/AWSSDK.Lambda.xml",
+        "lib/netcoreapp3.1/AWSSDK.Lambda.dll",
+        "lib/netcoreapp3.1/AWSSDK.Lambda.xml",
+        "lib/netstandard2.0/AWSSDK.Lambda.dll",
+        "lib/netstandard2.0/AWSSDK.Lambda.xml",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
+    "AWSSDK.S3/4.0.19": {
+      "sha512": "4MuPk4oADJImViC6jeNNWCrwY5/BNtuoHG2vzb5nBRPAdS8GTFIkDpIUbg+w82pZL8TEG+pN8ARTBxoD26FOzg==",
+      "type": "package",
+      "path": "awssdk.s3/4.0.19",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "analyzers/dotnet/cs/AWSSDK.S3.CodeAnalysis.dll",
+        "analyzers/dotnet/cs/SharedAnalysisCode.dll",
+        "awssdk.s3.4.0.19.nupkg.sha512",
+        "awssdk.s3.nuspec",
+        "images/AWSLogo.png",
+        "lib/net472/AWSSDK.S3.dll",
+        "lib/net472/AWSSDK.S3.xml",
+        "lib/net8.0/AWSSDK.S3.dll",
+        "lib/net8.0/AWSSDK.S3.xml",
+        "lib/netcoreapp3.1/AWSSDK.S3.dll",
+        "lib/netcoreapp3.1/AWSSDK.S3.xml",
+        "lib/netstandard2.0/AWSSDK.S3.dll",
+        "lib/netstandard2.0/AWSSDK.S3.xml",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
+    "AWSSDK.Scheduler/4.0.2.16": {
+      "sha512": "Wsfu6qk/zgXp5wscH4yMCfUpZwqOoAIRR1HftNvjiU6PCyLsNE92yTztmglDFQi/mrNHogzO29yhZjkXMoDRsg==",
+      "type": "package",
+      "path": "awssdk.scheduler/4.0.2.16",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "analyzers/dotnet/cs/AWSSDK.Scheduler.CodeAnalysis.dll",
+        "analyzers/dotnet/cs/SharedAnalysisCode.dll",
+        "awssdk.scheduler.4.0.2.16.nupkg.sha512",
+        "awssdk.scheduler.nuspec",
+        "images/AWSLogo.png",
+        "lib/net472/AWSSDK.Scheduler.dll",
+        "lib/net472/AWSSDK.Scheduler.xml",
+        "lib/net8.0/AWSSDK.Scheduler.dll",
+        "lib/net8.0/AWSSDK.Scheduler.xml",
+        "lib/netcoreapp3.1/AWSSDK.Scheduler.dll",
+        "lib/netcoreapp3.1/AWSSDK.Scheduler.xml",
+        "lib/netstandard2.0/AWSSDK.Scheduler.dll",
+        "lib/netstandard2.0/AWSSDK.Scheduler.xml",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
     "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/10.0.3": {
       "sha512": "EdsNq9yumLHn8V8bstUXNApBhQFQjGYgufwCAp6SOrXm320n9jNXNpvKS6zfith10wAexkGdFAz1ulW50l+9Kw==",
       "type": "package",
@@ -416,6 +615,10 @@
   },
   "projectFileDependencyGroups": {
     "net10.0": [
+      "AWSSDK.EventBridge >= 4.0.5.18",
+      "AWSSDK.Lambda >= 4.0.13.4",
+      "AWSSDK.S3 >= 4.0.19",
+      "AWSSDK.Scheduler >= 4.0.2.16",
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 10.0.3",
       "Microsoft.AspNetCore.OpenApi >= 10.0.2",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 10.0.0",
@@ -467,6 +670,22 @@
       "net10.0": {
         "targetAlias": "net10.0",
         "dependencies": {
+          "AWSSDK.EventBridge": {
+            "target": "Package",
+            "version": "[4.0.5.18, )"
+          },
+          "AWSSDK.Lambda": {
+            "target": "Package",
+            "version": "[4.0.13.4, )"
+          },
+          "AWSSDK.S3": {
+            "target": "Package",
+            "version": "[4.0.19, )"
+          },
+          "AWSSDK.Scheduler": {
+            "target": "Package",
+            "version": "[4.0.2.16, )"
+          },
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
             "target": "Package",
             "version": "[10.0.3, )"

@@ -15,4 +15,11 @@
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore\10.0.3\buildTransitive\net10.0\Microsoft.EntityFrameworkCore.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore\10.0.3\buildTransitive\net10.0\Microsoft.EntityFrameworkCore.props')" />
   </ImportGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgAWSSDK_Core Condition=" '$(PkgAWSSDK_Core)' == '' ">C:\Users\ghazi\.nuget\packages\awssdk.core\4.0.3.17</PkgAWSSDK_Core>
+    <PkgAWSSDK_Scheduler Condition=" '$(PkgAWSSDK_Scheduler)' == '' ">C:\Users\ghazi\.nuget\packages\awssdk.scheduler\4.0.2.16</PkgAWSSDK_Scheduler>
+    <PkgAWSSDK_S3 Condition=" '$(PkgAWSSDK_S3)' == '' ">C:\Users\ghazi\.nuget\packages\awssdk.s3\4.0.19</PkgAWSSDK_S3>
+    <PkgAWSSDK_Lambda Condition=" '$(PkgAWSSDK_Lambda)' == '' ">C:\Users\ghazi\.nuget\packages\awssdk.lambda\4.0.13.4</PkgAWSSDK_Lambda>
+    <PkgAWSSDK_EventBridge Condition=" '$(PkgAWSSDK_EventBridge)' == '' ">C:\Users\ghazi\.nuget\packages\awssdk.eventbridge\4.0.5.18</PkgAWSSDK_EventBridge>
+  </PropertyGroup>
 </Project>

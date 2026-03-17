@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("cv_prep")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bdfeee0fd81d8709750888a719c80d7e075cf3a1")]
 [assembly: System.Reflection.AssemblyProductAttribute("cv_prep")]
 [assembly: System.Reflection.AssemblyTitleAttribute("cv_prep")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

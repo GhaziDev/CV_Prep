@@ -13,6 +13,9 @@ using Serilog;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Serilog.Core;
 using Microsoft.AspNetCore.Authorization;
+using Amazon.Scheduler;
+using Amazon.Scheduler.Model;
+
 
 namespace cv_prep.Controllers;
 
@@ -27,6 +30,8 @@ class JobController:Controller
     private readonly UserDb _userDb;
 
     private readonly UserInfoDb _userInfoDb;
+
+    private readonly SchedulerLogDb _schedulerLogDb;
 
 
     public JobController(JobDb db, UserDb userDb, UserInfoDb userInfoDb)
@@ -69,6 +74,71 @@ class JobController:Controller
 
 
 
+        
+    }
+
+
+
+public async Task<ActionResult<string>> StartJob(JobRequest request)
+    {
+
+        var _user = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+
+        var schedulerLog = await _schedulerLogDb.SchedulerLog.FirstOrDefaultAsync(u=>u._User==_user);
+
+        var NoOfTimesExec = schedulerLog!.NoOfExec;
+        var trackExec = schedulerLog!.TrackExec;
+        var recordedHour = schedulerLog.RecordedHour;
+        var requestedHour = schedulerLog.RequestedHour;
+// the above should be done on updating the scheduler, not starting new one.
+        var schedulerClient = new AmazonSchedulerClient();
+
+
+        if(requestedHour<=recordedHour && trackExec >= NoOfTimesExec)
+        {
+            return BadRequest("out of range requested hours");
+        }
+
+        else{
+
+        var schedulerRequest = new CreateScheduleRequest{
+             Name= "job-every-5-min",
+    ScheduleExpression = "rate(1 hour)",
+    GroupName = "default",
+    Target = new Target { Arn = "lambda arn", RoleArn = "scheduler arn", Input = "json data" },
+
+        };
+
+        // the target lambda would have to run the OpenAI API for AI AGENT.
+
+
+        var response = await schedulerClient.CreateScheduleAsync(schedulerRequest);
+
+
+
+        return Ok("Scheduler has been created!");
+
+        }
+
+
+        //check if requested hour more than recorded hour, and number of execution times has been exceeded
+        // if so, don't start the schedule until the next hour
+        //if next hour came, reset the no of execution time, and create and run the scheduler
+
+        // current architecture would use the same lambda for all users, because it has small user base.'
+
+
+
+
+        
+        
+    }
+
+
+    public Task<ActionResult<string>> StopScheduler()
+    {
+        //
         
     }
 
