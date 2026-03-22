@@ -11,17 +11,17 @@ namespace cv_prep.Models;
 public class SchedulerLog
 {
 
-    public required DateOnly RecordedHour;
-    public required DateOnly RequestedHour;
+    public required DateOnly RecordedHour; //when
+    public required DateOnly RequestedHour; // on change/edit
 
-    public required int NoOfExec;
-    public required int TrackExec;
+    public required int NoOfExec; //how many times per hour.
+    public required int TrackExec; //tells how many times the scheduler has been running overall.
 
-    public required string SchedulerArn;
+    public required string SchedulerArn; // AWS lambda arn.
 
 
 
-    public required int _User;
+    public required int _User; // user Id
 
 
 }

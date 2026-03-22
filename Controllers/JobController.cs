@@ -34,13 +34,15 @@ class JobController:Controller
     private readonly SchedulerLogDb _schedulerLogDb;
 
 
-    public JobController(JobDb db, UserDb userDb, UserInfoDb userInfoDb)
+    public JobController(JobDb db, UserDb userDb, UserInfoDb userInfoDb, SchedulerLogDb schedulerLogDb)
     {
          
 
         _userDb = userDb;
         _db = db;
         this._userInfoDb = userInfoDb;
+
+        _schedulerLogDb = schedulerLogDb;
 
     
 
@@ -79,6 +81,9 @@ class JobController:Controller
 
 
 
+
+[HttpPost("start")]
+[Authorize]
 public async Task<ActionResult<string>> StartJob(JobRequest request)
     {
 
@@ -87,20 +92,12 @@ public async Task<ActionResult<string>> StartJob(JobRequest request)
 
         var schedulerLog = await _schedulerLogDb.SchedulerLog.FirstOrDefaultAsync(u=>u._User==_user);
 
-        var NoOfTimesExec = schedulerLog!.NoOfExec;
-        var trackExec = schedulerLog!.TrackExec;
-        var recordedHour = schedulerLog.RecordedHour;
-        var requestedHour = schedulerLog.RequestedHour;
 // the above should be done on updating the scheduler, not starting new one.
         var schedulerClient = new AmazonSchedulerClient();
 
 
-        if(requestedHour<=recordedHour && trackExec >= NoOfTimesExec)
-        {
-            return BadRequest("out of range requested hours");
-        }
 
-        else{
+    
 
         var schedulerRequest = new CreateScheduleRequest{
              Name= "job-every-5-min",
@@ -119,7 +116,6 @@ public async Task<ActionResult<string>> StartJob(JobRequest request)
 
         return Ok("Scheduler has been created!");
 
-        }
 
 
         //check if requested hour more than recorded hour, and number of execution times has been exceeded
@@ -136,11 +132,55 @@ public async Task<ActionResult<string>> StartJob(JobRequest request)
     }
 
 
-    public Task<ActionResult<string>> StopScheduler()
+    [HttpDelete("stop")]
+    [Authorize]
+    public async Task<ActionResult<string>> StopScheduler()
     {
-        //
+
+         var _user = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var scheduler = await _schedulerLogDb.SchedulerLog.FirstOrDefaultAsync(u=>u._User==_user);
+
+        if(scheduler!=null){
+        _schedulerLogDb.SchedulerLog.Remove(scheduler);
+        return Ok("Scheduler has been stopped and deleted");
+        }
+
+        return BadRequest("No Scheduler to stop");
+
+
+
         
     }
+
+
+    [HttpPut("edit")]
+    [Authorize]
+
+    public async Task<ActionResult<string>> EditSchedulerTiming(EditSchedulerRequest request)
+    {
+        var _user = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+       
+        var newNoOfExec = request.NoOfExec;
+        var scheduler = await _schedulerLogDb.SchedulerLog.FirstAsync(u=>u._User==_user);
+
+        if (scheduler != null)
+        {
+            scheduler.NoOfExec = newNoOfExec;
+            _schedulerLogDb.SaveChanges();
+            return Ok("Scehduler timing has been updated");
+        }
+
+        return NotFound("Scheduler does not exist");
+
+        
+
+
+
+    }
+
+
+
 
 
 
