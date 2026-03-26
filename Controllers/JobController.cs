@@ -66,7 +66,7 @@ class JobController:Controller
 
         foreach(var job in getJobs)
         {
-            JobResponseList.Add(new JobResponse(job.Id,job.Cv, job.CoverLetter, job.Description , job.Url, job.Role, job.ClosingDate, job.Location));
+            JobResponseList.Add(new JobResponse(job.Id,job.AtsKeywords, job.Description , job.Url, job.Role, job.ClosingDate, job.Location));
 
 
 
@@ -177,6 +177,38 @@ public async Task<ActionResult<string>> StartJob(JobRequest request)
 
 
 
+    }
+
+
+    public async Task<ActionResult<string>> StoreJobs(JobRequest request)
+    {
+        // lambda function would send requests here
+
+        try{
+        int id =  _db.Job.LastOrDefault()!.Id+1;
+
+        var userId = await _userDb.User.FindAsync(int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+        if(userId!=null){
+        var requestedJob = new Job {Id=id,AtsKeywords=request.AtsKeywords,Description = request.Description, Url = request.Url, Role = request.Role, ClosingDate = request.ClosingDate, Location = request.Location, _User =  userId};
+
+
+        var job = await _db.Job.AddAsync(requestedJob);
+
+        return Ok("Job has been retrieved and stored");
+        }
+
+        return Unauthorized("User not authorized");
+        }
+        catch(Exception e)
+        {
+            Log.Error($"{e}");
+
+
+            return Problem("Internal Server Error");
+
+            
+        }
+        
     }
 
 

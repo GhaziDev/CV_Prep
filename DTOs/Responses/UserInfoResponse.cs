@@ -5,4 +5,4 @@ using cv_prep.Models;
 namespace cv_prep.DTOs.Responses;
 
 
-public record UserInfoResponse(User User_,Blob MainCv, Blob Coverletter);
+public record UserInfoResponse(User User_,Blob MainCv, Blob? Coverletter);

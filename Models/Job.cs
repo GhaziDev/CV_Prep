@@ -7,10 +7,11 @@ namespace cv_prep.Models;
 public class Job
 {
     public required int Id;
-    public required Blob Cv;
-    public required Blob CoverLetter;
 
     public required string Description;
+
+    public required List<string> AtsKeywords;
+    
 
     public required string Url;
 

@@ -76,7 +76,8 @@ public class UserInfoController : Controller
         var userInfo = await _db.UserInfo.FirstOrDefaultAsync(ui=>ui.User_.Id==int.Parse(userId!));
         if (userInfo!=null)
         {
-            return new UserInfoResponse(userInfo.User_,userInfo.MainCv,userInfo.CoverLetter!);
+            
+            return new UserInfoResponse(userInfo.User_,userInfo.MainCv,userInfo.CoverLetter);
 
             
         }

@@ -10,9 +10,13 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Serilog;
+using Microsoft.AspNetCore.Authorization;
 
 namespace cv_prep.Controllers;
 
+
+[Route("api/[controller]")]
+[ApiController]
 public class UserController : Controller
 {
 
@@ -61,17 +65,41 @@ public class UserController : Controller
     }
 
 
-
+    [HttpPost("login")]
     public async Task<ActionResult<string>> Login(LoginRequest userInfo)
     {
 
+        Console.WriteLine(userInfo);
+        Console.WriteLine(userInfo.Email.Length);
 
         try{
 
-        if(userInfo.Email.Length>0 && userInfo.OtpCode?.Length==0)
+        if(userInfo.Email.Length>0 && userInfo.OtpCode == null)
         {
+            //send otp code here, check email if it exists, then send otp code.
+            var user = _db.User.Find(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                if (user!=null)
+                {
 
-            return Unauthorized("Requires OTP Code");
+                    var email = user.Email;
+                    // send email here.
+
+                    // for testing purposes
+                    user.Code = "abc123";
+                    await _db.SaveChangesAsync();
+                    var result = new{message= "Check your inbox for OTP code!",step = 1};
+
+                     return Unauthorized(result);
+                    
+
+                    
+                }
+
+                return BadRequest("Email does not exist in database");
+
+            
+
+           
 
             
         }
