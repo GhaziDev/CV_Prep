@@ -20,9 +20,9 @@ namespace cv_prep.Controllers;
 public class UserController : Controller
 {
 
-     private readonly UserDb _db;
+     private readonly ContextDb _db;
 
-     public UserController(UserDb db)
+     public UserController(ContextDb db)
     {
         _db = db;
     }
@@ -65,6 +65,12 @@ public class UserController : Controller
     }
 
 
+    [HttpGet("check-auth")]
+    public async Task<ActionResult<bool>> CheckAuth()
+    {
+        return User.FindFirstValue(ClaimTypes.NameIdentifier)!=null?Ok(true):Unauthorized(false);
+    }
+
     [HttpPost("login")]
     public async Task<ActionResult<string>> Login(LoginRequest userInfo)
     {
@@ -77,7 +83,7 @@ public class UserController : Controller
         if(userInfo.Email.Length>0 && userInfo.OtpCode == null)
         {
             //send otp code here, check email if it exists, then send otp code.
-            var user = _db.User.Find(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var user = await _db.User.FirstOrDefaultAsync(u=>u.Email == userInfo.Email);
                 if (user!=null)
                 {
 

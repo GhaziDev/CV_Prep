@@ -5,5 +5,5 @@ namespace cv_prep.DTOs.Requests;
 
 
 
-public record JobRequest(int Id,List<string> AtsKeywords,string Description,string Url,string Role,DateOnly? ClosingDate,string Location,int user);
+public record JobRequest(int Id,List<string> AtsKeywords,string Description,string Url,string Role,DateOnly? ClosingDate,string Location,int user, List<string> Suggestions);
 

@@ -6,7 +6,7 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddAuthorization();    // REQUIRED
-builder.Services.AddDbContext<cv_prep.Models.UserDb>(options =>
+builder.Services.AddDbContext<cv_prep.Models.ContextDb>(options =>
     options.UseSqlServer(connectionString)); 
 
 builder.Services.AddCors(options =>
@@ -15,9 +15,11 @@ builder.Services.AddCors(options =>
                       policy =>
                       {
                           // Specify the exact origins that are allowed to access your API
-                          policy.WithOrigins("http://localhost:5112", "https://www.trustedclientapp.com")
+                          policy.WithOrigins("http://localhost:5112","https://localhost:7196", "https://www.trustedclientapp.com")
                                 .AllowAnyHeader()
-                                .AllowAnyMethod();
+                                .AllowAnyMethod()
+                                .AllowCredentials();
+
                       });
 });
 
@@ -30,7 +32,10 @@ builder.Services.AddOpenApi();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options=>
     {
-     options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+        options.Cookie.Name = "cvprep.auth";
+        options.Cookie.SameSite = SameSiteMode.None;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
         options.SlidingExpiration = true;
         options.AccessDeniedPath = "/Forbidden/";
     }
@@ -67,7 +72,8 @@ var summaries = new[]
 
 var cookiePolicyOptions = new CookiePolicyOptions
 {
-    MinimumSameSitePolicy = SameSiteMode.Strict,
+    MinimumSameSitePolicy = SameSiteMode.None,
+    
 };
 
 

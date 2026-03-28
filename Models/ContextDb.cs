@@ -4,7 +4,7 @@ namespace cv_prep.Models;
 
 public class ContextDb : DbContext
 {
-    public ContextDb(DbContextOptions<UserDb> options)
+    public ContextDb(DbContextOptions<ContextDb> options)
         : base(options) { }
 
     public DbSet<User> User => Set<User>();

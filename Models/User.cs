@@ -1,7 +1,9 @@
 namespace cv_prep.Models;
 
 using System;
+using Microsoft.EntityFrameworkCore;
 
+[PrimaryKey("Id")]
 public class User
 {
     public int Id {get;set;}

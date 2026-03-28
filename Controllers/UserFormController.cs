@@ -18,13 +18,12 @@ namespace cv_prep.Controllers;
 public class UserInfoController : Controller
 {
 
-        private readonly UserInfoDb _db;
-        private readonly UserDb _userDb;
+        private readonly ContextDb _db;
 
-     public UserInfoController(UserInfoDb db,UserDb userDb)
+     public UserInfoController(ContextDb db)
     {
         _db = db;
-        _userDb = userDb;
+        
     }
 
 
@@ -41,9 +40,16 @@ public class UserInfoController : Controller
 
 
         
+
+        var latestId = _db.UserInfo.Last().Id;
+        
+        
         UserInfo user = new UserInfo
         {
-            User_ = _userDb.User.Find(User.FindFirstValue(ClaimTypes.NameIdentifier)),
+
+            Id= latestId+1,
+            
+            User_ = _db.User.Find(User.FindFirstValue(ClaimTypes.NameIdentifier))!,
             MainCv = request.MainCv,
             CoverLetter= request.CoverLetter
 

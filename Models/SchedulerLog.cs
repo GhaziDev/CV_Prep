@@ -5,11 +5,12 @@ using Microsoft.EntityFrameworkCore;
 namespace cv_prep.Models;
 
 
-
 [Index(nameof(_User), IsUnique = true)]
-
+[PrimaryKey("Id")]
 public class SchedulerLog
 {
+
+    public required int Id;
 
     public required DateOnly RecordedHour; //when
     public required DateOnly RequestedHour; // on change/edit

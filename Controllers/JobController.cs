@@ -25,24 +25,19 @@ namespace cv_prep.Controllers;
 class JobController:Controller
 {
     
-    private readonly JobDb _db;
-
-    private readonly UserDb _userDb;
-
-    private readonly UserInfoDb _userInfoDb;
-
-    private readonly SchedulerLogDb _schedulerLogDb;
+    
+    private readonly ContextDb _db;
 
 
-    public JobController(JobDb db, UserDb userDb, UserInfoDb userInfoDb, SchedulerLogDb schedulerLogDb)
+
+
+    public JobController(ContextDb db)
     {
          
 
-        _userDb = userDb;
+      
         _db = db;
-        this._userInfoDb = userInfoDb;
-
-        _schedulerLogDb = schedulerLogDb;
+       
 
     
 
@@ -58,7 +53,7 @@ class JobController:Controller
     {
 
 
-        var getUser = _userDb.User.Find(ClaimTypes.NameIdentifier);
+        var getUser = _db.User.Find(ClaimTypes.NameIdentifier);
 
         var getJobs = _db.Job.Where(job=>job._User==getUser);
 
@@ -90,7 +85,7 @@ public async Task<ActionResult<string>> StartJob(JobRequest request)
         var _user = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
 
-        var schedulerLog = await _schedulerLogDb.SchedulerLog.FirstOrDefaultAsync(u=>u._User==_user);
+        var schedulerLog = await _db.SchedulerLog.FirstOrDefaultAsync(u=>u._User==_user);
 
 // the above should be done on updating the scheduler, not starting new one.
         var schedulerClient = new AmazonSchedulerClient();
@@ -100,7 +95,7 @@ public async Task<ActionResult<string>> StartJob(JobRequest request)
     
 
         var schedulerRequest = new CreateScheduleRequest{
-             Name= "job-every-5-min",
+             Name= "job-every-1-hour",
     ScheduleExpression = "rate(1 hour)",
     GroupName = "default",
     Target = new Target { Arn = "lambda arn", RoleArn = "scheduler arn", Input = "json data" },
@@ -138,10 +133,10 @@ public async Task<ActionResult<string>> StartJob(JobRequest request)
     {
 
          var _user = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        var scheduler = await _schedulerLogDb.SchedulerLog.FirstOrDefaultAsync(u=>u._User==_user);
+        var scheduler = await _db.SchedulerLog.FirstOrDefaultAsync(u=>u._User==_user);
 
         if(scheduler!=null){
-        _schedulerLogDb.SchedulerLog.Remove(scheduler);
+        _db.SchedulerLog.Remove(scheduler);
         return Ok("Scheduler has been stopped and deleted");
         }
 
@@ -162,13 +157,13 @@ public async Task<ActionResult<string>> StartJob(JobRequest request)
 
        
         var newNoOfExec = request.NoOfExec;
-        var scheduler = await _schedulerLogDb.SchedulerLog.FirstAsync(u=>u._User==_user);
+        var scheduler = await _db.SchedulerLog.FirstAsync(u=>u._User==_user);
 
         if (scheduler != null)
         {
             scheduler.NoOfExec = newNoOfExec;
-            _schedulerLogDb.SaveChanges();
-            return Ok("Scehduler timing has been updated");
+            _db.SaveChanges();
+            return Ok("Scheduler timing has been updated");
         }
 
         return NotFound("Scheduler does not exist");
@@ -187,9 +182,9 @@ public async Task<ActionResult<string>> StartJob(JobRequest request)
         try{
         int id =  _db.Job.LastOrDefault()!.Id+1;
 
-        var userId = await _userDb.User.FindAsync(int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+        var userId = await _db.User.FindAsync(int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
         if(userId!=null){
-        var requestedJob = new Job {Id=id,AtsKeywords=request.AtsKeywords,Description = request.Description, Url = request.Url, Role = request.Role, ClosingDate = request.ClosingDate, Location = request.Location, _User =  userId};
+        var requestedJob = new Job {Id=id,AtsKeywords=request.AtsKeywords,Description = request.Description, Url = request.Url, Role = request.Role, ClosingDate = request.ClosingDate, Location = request.Location, _User =  userId, Suggestions = request.Suggestions};
 
 
         var job = await _db.Job.AddAsync(requestedJob);
